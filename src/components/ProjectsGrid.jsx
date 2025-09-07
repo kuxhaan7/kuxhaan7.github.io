@@ -1,6 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
-import TiltCard from "../effects/TiltCard";
+import React, { useState } from "react";
+import ImageModal from "./ImageModal";
 
 const projects = [
   {
@@ -53,43 +52,54 @@ const projects = [
   },
 ];
 
-export default function ProjectsGrid() {
-  return (
-    <section className="projects-section" aria-labelledby="grid-heading">
-      <div className="container">
-        <h2 id="grid-heading" style={{ letterSpacing: "-.02em", margin: "0 0 16px" }}>
-          Projects
-        </h2>
 
-        <div className="tiles">
-          {projects.map((p, i) => (
-            <TiltCard key={p.title} className="tile">
-              <motion.a
-                href={p.link}
-                target={p.link === "#" ? "_self" : "_blank"}
-                rel="noreferrer"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-                transition={{ duration: 0.55, delay: i * 0.05 }}
-                className="tile-inner"
-              >
-                <img
-                  src={p.img}
-                  alt={`${p.title} screenshot`}
-                  loading="lazy"
-                  className="tile-img"
-                />
-                <div className="tile-body">
-                  <h3 className="tile-title">{p.title}</h3>
-                  <p className="tile-desc">{p.desc}</p>
-                  <span className="tile-cta">Open →</span>
+export default function FoldersGrid() {
+  const [open, setOpen] = useState(null); // holds the project object
+
+  return (
+    <section className="folders-section" id="work">
+      <div className="container">
+        <h2 className="section-title">Projects</h2>
+
+        <div className="folders-grid">
+          {PROJECTS.map((p) => (
+            <button
+              key={p.id}
+              className="folderCard"
+              onClick={() => setOpen(p)}
+              aria-label={`Open ${p.title} gallery`}
+            >
+              <div className="folderShape" aria-hidden>
+                <div className="folderTab" />
+                <div className="folderPocket" />
+              </div>
+
+              <div className="folderMeta">
+                <h3 className="folderTitle">{p.title}</h3>
+                <p className="folderDesc">{p.desc}</p>
+                <div className="folderChips">
+                  {p.tags.map((t) => (
+                    <span className="chip" key={t}>{t}</span>
+                  ))}
                 </div>
-              </motion.a>
-            </TiltCard>
+              </div>
+
+              {/* “peek” image sitting inside the folder */}
+              <div className="folder-media">
+                <img src={p.thumb} alt="" loading="lazy" />
+              </div>
+            </button>
           ))}
         </div>
       </div>
+
+      {/* Modal viewer */}
+      {open && (
+        <ImageModal
+          project={open}
+          onClose={() => setOpen(null)}
+        />
+      )}
     </section>
   );
 }
