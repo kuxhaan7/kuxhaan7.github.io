@@ -155,7 +155,7 @@ export default function NavigationBar() {
                 {l.label}
               </a>
             ))}
-            <a href="/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
+            <a href="./resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
               <FileDown size={16} /> Resume
             </a>
           </motion.div>
