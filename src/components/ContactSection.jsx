@@ -5,7 +5,7 @@ const EMAIL = "kushaankaushik007@gmail.com"; // ← put your real email here
 const GITHUB = "https://github.com/kuxhaan7"; // confirmed
 const LINKEDIN = "#"; // ← add your LinkedIn URL
 const CAL = "/"; // ← or Calendly link
-const RESUME_URL = "/resume/Kushaan_Kaushik_Resume.pdf";
+const RESUME_URL = "/resume/KKRESUME2026.pdf";
 
 
 export default function ContactSection() {

@@ -114,7 +114,7 @@ export default function NavigationBar() {
           >
             <Linkedin size={18} />
           </a>
-          <a className="cta-resume" href="/resume/Kushaan_Kaushik_Resume.pdf" target="_blank" rel="noreferrer">
+          <a className="cta-resume" href="/resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
             <FileDown size={16} /> Resume
           </a>
           {/* <button
@@ -155,7 +155,7 @@ export default function NavigationBar() {
                 {l.label}
               </a>
             ))}
-            <a href="/Kushaan_Kaushik_Resume.pdf" target="_blank" rel="noreferrer">
+            <a href="/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
               <FileDown size={16} /> Resume
             </a>
           </motion.div>
