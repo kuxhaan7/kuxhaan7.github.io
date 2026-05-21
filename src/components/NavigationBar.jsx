@@ -114,7 +114,7 @@ export default function NavigationBar() {
           >
             <Linkedin size={18} />
           </a>
-          <a className="cta-resume" href="/resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
+          <a className="cta-resume" href="./resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
             <FileDown size={16} /> Resume
           </a>
           {/* <button
