@@ -49,7 +49,7 @@ export default function AboutSection() {
             <a className="btn" href="https://github.com/kuxhaan7" target="_blank" rel="noreferrer">
               GitHub ↗
             </a>
-            <a className="btn" href="#resume">Résumé ↗</a>
+            <a className="btn" href="./resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">Résumé ↗</a>
           </div>
         </article>
 

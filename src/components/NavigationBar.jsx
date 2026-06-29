@@ -71,7 +71,7 @@ export default function NavigationBar() {
       <div className="container inner">
         {/* Brand + availability */}
         <Magnetic strength={14}>
-          <a href="#" className="brand">
+          <a href="#main" className="brand">
             Kushaan Kaushik
             <span className="avail">
               <span className="dot" /> Open to work
@@ -107,7 +107,7 @@ export default function NavigationBar() {
           </a>
           <a
             className="icon-btn"
-            href="https://www.linkedin.com/in/kushaan-kaushik"
+            href="https://www.linkedin.com/in/kushaankaushik/"
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
@@ -157,6 +157,12 @@ export default function NavigationBar() {
             ))}
             <a href="./resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">
               <FileDown size={16} /> Resume
+            </a>
+            <a href="https://github.com/kuxhaan7" target="_blank" rel="noreferrer">
+              <Github size={16} /> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/kushaankaushik/" target="_blank" rel="noreferrer">
+              <Linkedin size={16} /> LinkedIn
             </a>
           </motion.div>
         )}

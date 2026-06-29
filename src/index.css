@@ -10,6 +10,32 @@
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
 }
 
+/* ---------- Lenis smooth scroll ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* ---------- Global reset & safety nets ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { max-width: 100%; overflow-x: hidden; }
+img, svg, video { max-width: 100%; height: auto; }
+
+/* Visible keyboard focus for all interactive elements (a11y) */
+:where(a, button, [tabindex], textarea, input, select, .folderCard):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Larger tap targets on touch devices without altering the desktop look */
+@media (pointer: coarse) {
+  .icon-btn, .hamburger, .lb-close { min-width: 44px; min-height: 44px; }
+  .lightbox-focus .nav { min-width: 44px; min-height: 44px; }
+  .chip-link, .btn, .viewAll, .cta-resume, .feature-cta, .pill-cta { min-height: 44px; }
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -33,7 +59,7 @@ a:hover {
 .container {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding-inline: max(20px, env(safe-area-inset-left), env(safe-area-inset-right));
 }
 
 /* Skip link for a11y */
@@ -90,7 +116,8 @@ a:hover {
 .nav .inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 12px 20px;
+  padding: max(12px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 12px
+    max(20px, env(safe-area-inset-left));
   display: flex;
   align-items: center;
   gap: 12px;
@@ -250,6 +277,25 @@ a:hover {
 @media (max-width: 859px) {
   .hide-sm {
     display: none;
+  }
+  /* On mobile only the brand + hamburger stay inline; the rest moves to the panel */
+  .actions .icon-btn,
+  .actions .cta-resume {
+    display: none;
+  }
+  .avail {
+    display: none; /* the "Open to work" pill is the main width offender */
+  }
+  .nav .inner {
+    flex-wrap: nowrap;
+    max-width: 100%;
+  }
+  .brand {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+  .actions {
+    margin-left: auto;
   }
 }
 
@@ -885,12 +931,17 @@ body {
 
 .folders-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  grid-template-columns: 1fr; /* mobile: single column, never overflows */
   gap: clamp(14px, 3vw, 28px);
+}
+@media (min-width: 640px) {
+  .folders-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 @media (min-width: 1024px) {
   .folders-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -1124,6 +1175,8 @@ html {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  overflow: hidden; /* clip decorative blobs so they don't widen the page */
+  max-width: 100vw;
   background: radial-gradient(
       1100px 600px at 50% -10%,
       #ffffff 0%,
@@ -1420,6 +1473,132 @@ html {
   }
 }
 /* Keep the bright look */
+/* ---------- Featured showcase (reliable grid; replaces the scroll-pinned stack) ---------- */
+.showcase {
+  padding: 24px 0 80px;
+}
+.showcase-heading {
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: clamp(34px, 6.5vw, 68px);
+  margin: 0 0 10px;
+  color: #111;
+}
+.showcase-sub {
+  text-align: center;
+  color: var(--muted);
+  margin: 0 auto 40px;
+  max-width: 52ch;
+  font-size: clamp(15px, 2.2vw, 18px);
+}
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(18px, 3vw, 28px);
+}
+@media (min-width: 760px) {
+  .showcase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.showcase-card {
+  position: relative;
+  will-change: transform;
+}
+.showcase-link {
+  display: block;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.07);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.25s ease;
+}
+.showcase-link:hover {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.14);
+}
+.showcase-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #f2f4f9;
+}
+.showcase-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.showcase-link:hover .showcase-media img {
+  transform: scale(1.05);
+}
+.showcase-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.showcase-link:hover .showcase-shine {
+  transform: translateX(130%);
+}
+.showcase-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+}
+.showcase-title {
+  margin: 0 0 4px;
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #111;
+}
+.showcase-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.showcase-cta {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  background: #111;
+  padding: 10px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+.showcase-link:hover .showcase-cta {
+  background: var(--accent);
+}
+@media (max-width: 480px) {
+  .showcase-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .showcase-media img,
+  .showcase-shine {
+    transition: none;
+  }
+}
+
+/* legacy .stack-* rules below are unused after the showcase redesign (kept inert) */
 .stack-section {
   padding: 0vh 0 10vh;
 }
@@ -1435,6 +1614,7 @@ html {
 .stack-outer {
   height: 280svh;
   position: relative;
+  overflow-x: clip; /* contain framer ±70px slide-in transforms */
 }
 .stack-sticky {
   position: sticky;

@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 export default function HeroSection() {
   const scrollToProjects = () => {
     const target =
-      document.querySelector("#folders") ||
       document.querySelector("#projects") ||
+      document.querySelector("#gallery") ||
       document.querySelector("#work");
     target?.scrollIntoView({ behavior: "smooth", block: "start" });
   };

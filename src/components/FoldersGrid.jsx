@@ -28,7 +28,7 @@ export default function FoldersGrid() {
   const [viewer, setViewer] = useState(null);
 
   return (
-    <section className="folders-section" id="projects">
+    <section className="folders-section" id="gallery">
       <div className="container">
         <h2 className="section-title">Projects</h2>
 
@@ -80,7 +80,7 @@ export default function FoldersGrid() {
                       variants={cardUp(i)}
                       style={{ left: `${28 + i * 72}px`, zIndex: 5 + i }}
                     >
-                      <img src={src} alt="" loading="lazy" />
+                      <img src={src} alt="" loading="lazy" decoding="async" />
                     </motion.div>
                   ))}
                   {extra > 0 && (

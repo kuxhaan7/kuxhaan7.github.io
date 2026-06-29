@@ -50,6 +50,7 @@ export default function ImageModal({ project, onClose }) {
     <AnimatePresence>
       <motion.div
         className="lightbox-backdrop"
+        data-lenis-prevent
         onMouseDown={handleBackdrop}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -93,7 +94,7 @@ export default function ImageModal({ project, onClose }) {
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <div className="lb-frame">
-                    <img className="lb-img" src={src} alt={`${project.title} ${idx + 1}`} loading="lazy" />
+                    <img className="lb-img" src={src} alt={`${project.title} screenshot ${idx + 1} of ${project.images.length}`} loading="lazy" decoding="async" />
                   </div>
                 </motion.button>
               ))}
@@ -110,7 +111,7 @@ export default function ImageModal({ project, onClose }) {
                 transition={{ duration: 0.25 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <img src={project.images[focusIdx]} alt={`${project.title} ${focusIdx + 1}`} />
+                <img src={project.images[focusIdx]} alt={`${project.title} screenshot ${focusIdx + 1} of ${project.images.length}`} loading="lazy" decoding="async" />
               </motion.div>
               <button className="nav next" onClick={() => setFocusIdx(Math.min(project.images.length - 1, focusIdx + 1))} aria-label="Next">›</button>
             </div>
