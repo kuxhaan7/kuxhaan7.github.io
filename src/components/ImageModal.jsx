@@ -1,7 +1,7 @@
 // src/components/ImageModal.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 export default function ImageModal({ project, onClose }) {
   const panelRef = useRef(null);
@@ -48,7 +48,7 @@ export default function ImageModal({ project, onClose }) {
 
   const backdrop = (
     <AnimatePresence>
-      <motion.div
+      <m.div
         className="lightbox-backdrop"
         data-lenis-prevent
         onMouseDown={handleBackdrop}
@@ -56,7 +56,7 @@ export default function ImageModal({ project, onClose }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <motion.div
+        <m.div
           className="lightbox-panel"
           role="dialog"
           aria-modal="true"
@@ -81,7 +81,7 @@ export default function ImageModal({ project, onClose }) {
           {focusIdx === -1 ? (
             <div className="lightbox-grid">
               {project.images.map((src, idx) => (
-                <motion.button
+                <m.button
                   key={src}
                   className="lb-card"
                   onMouseMove={onMove}
@@ -96,13 +96,13 @@ export default function ImageModal({ project, onClose }) {
                   <div className="lb-frame">
                     <img className="lb-img" src={src} alt={`${project.title} screenshot ${idx + 1} of ${project.images.length}`} loading="lazy" decoding="async" />
                   </div>
-                </motion.button>
+                </m.button>
               ))}
             </div>
           ) : (
             <div className="lightbox-focus">
               <button className="nav prev" onClick={() => setFocusIdx(Math.max(0, focusIdx - 1))} aria-label="Previous">‹</button>
-              <motion.div
+              <m.div
                 key={project.images[focusIdx]}
                 className="focus-frame"
                 initial={{ opacity: 0, rotateX: 8, scale: 0.98 }}
@@ -112,12 +112,12 @@ export default function ImageModal({ project, onClose }) {
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <img src={project.images[focusIdx]} alt={`${project.title} screenshot ${focusIdx + 1} of ${project.images.length}`} loading="lazy" decoding="async" />
-              </motion.div>
+              </m.div>
               <button className="nav next" onClick={() => setFocusIdx(Math.min(project.images.length - 1, focusIdx + 1))} aria-label="Next">›</button>
             </div>
           )}
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </AnimatePresence>
   );
 

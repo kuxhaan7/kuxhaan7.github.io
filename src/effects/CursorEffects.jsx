@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m, useMotionValue, useSpring } from "framer-motion";
 
 /** Global cursor ring + glow that follows the pointer */
 export default function CursorEffects() {
@@ -43,13 +43,13 @@ export default function CursorEffects() {
   return (
     <>
       {/* ring */}
-      <motion.div
+      <m.div
         className="cursor-ring"
         style={{ translateX: sx, translateY: sy }}
         aria-hidden
       />
       {/* glow */}
-      <motion.div
+      <m.div
         className="cursor-glow"
         style={{ translateX: gx, translateY: gy }}
         aria-hidden
