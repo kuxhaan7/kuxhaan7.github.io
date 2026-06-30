@@ -2080,3 +2080,109 @@ html {
   .projectMedia img,
   .projectShine { transition: none !important; }
 }
+
+/* ===== Code & AI — text cards for repos without UI screenshots ===== */
+.code-section {
+  padding: 8px clamp(12px, 5vw, 40px) 96px;
+  background: var(--bg);
+}
+.code-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr; /* equal-height cards */
+  gap: clamp(16px, 2.2vw, 24px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .code-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .code-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.codeCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px 22px 20px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, #fbfcff, #f4f6fb);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  will-change: transform;
+}
+.codeCard::before {
+  /* faint top accent line that lights up on hover */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0071e3, #7ab8ff);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.codeCard:hover {
+  border-color: #cfd6e6;
+  background: #fff;
+  box-shadow: 0 26px 64px rgba(0, 0, 0, 0.12);
+}
+.codeCard:hover::before { transform: scaleX(1); }
+
+.codeTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.codeIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: #fff;
+  border: 1px solid var(--border);
+  color: #0071e3;
+  box-shadow: inset 0 1px 0 #fff, 0 6px 16px rgba(0, 113, 227, 0.1);
+}
+.codeArrow {
+  color: #a0a6b4;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.codeCard:hover .codeArrow {
+  color: #0071e3;
+  transform: translate(2px, -2px);
+}
+
+.codeTitle {
+  margin: 0 0 8px;
+  font-size: clamp(16px, 1.7vw, 19px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #111;
+  line-height: 1.25;
+}
+.codeDesc {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.codeTags {
+  margin-top: auto; /* pin tags to the bottom for a regular grid */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codeCard, .codeCard::before, .codeArrow { transition: none !important; }
+}
