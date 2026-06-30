@@ -1,131 +1,126 @@
 // src/components/FoldersGrid.jsx
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { projects as folders } from "../data/projects";
-import ImageModal from "./ImageModal"; // <— add this (we'll use the portal modal)
+import React, { Suspense, lazy, useState } from "react";
+import { m } from "framer-motion";
+import { projects } from "../data/projects";
 
-const burstContainer = {
-  closed: { transition: { staggerChildren: 0.06, staggerDirection: -1 } },
-  open:   { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+// The modal is only needed once a card is opened — split it out of the
+// critical path so it never blocks first paint.
+const ImageModal = lazy(() => import("./ImageModal"));
+
+const grid = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 
-const cardUp = (i) => ({
-  closed: { y: 6, opacity: 0, scale: 0.92, rotate: 0, filter: "blur(4px)" },
-  open: {
-    y: -70 - i * 40,
+// opacity stays 1 in both states on purpose — project cards must never be
+// invisible even if the scroll-reveal observer doesn't run. We animate a
+// subtle rise + scale, so a paused/failed reveal still shows full content.
+const card = {
+  hidden: { opacity: 1, y: 40, scale: 0.96 },
+  show: {
     opacity: 1,
+    y: 0,
     scale: 1,
-    rotate: [-4, -2, 2, 4][i % 4],
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 220, damping: 22 },
+    transition: { type: "spring", stiffness: 130, damping: 20, mass: 0.7 },
   },
-});
+};
 
 export default function FoldersGrid() {
-  // one state to control which folder is hovered (for the burst preview)
-  const [hoverIdx, setHoverIdx] = useState(null);
-  // one state to control the modal viewer (project object or null)
   const [viewer, setViewer] = useState(null);
 
   return (
-    <section className="folders-section" id="gallery">
+    <section className="projects-section" id="gallery">
       <div className="container">
         <h2 className="section-title">Projects</h2>
+        <p className="section-sub">
+          Tap any project to flip through the full set of screenshots.
+        </p>
 
-        <div className="folders-grid" role="list">
-          {folders.map((f, idx) => {
-            const isOpen = hoverIdx === idx;
-            const previews = f.images?.slice(0, 4) ?? [];
-            const extra = Math.max(0, (f.images?.length || 0) - previews.length);
-
+        <m.div
+          className="projects-grid"
+          role="list"
+          variants={grid}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+        >
+          {projects.map((p) => {
+            const cover = p.images?.[0];
+            const count = p.images?.length || 0;
             return (
-              <motion.article
+              <m.article
                 role="listitem"
-                key={f.title}
-                className="folderCard"
-                initial="closed"
-                animate={isOpen ? "open" : "closed"}
-                whileHover="open"
-                onHoverStart={() => setHoverIdx(idx)}
-                onHoverEnd={() => setHoverIdx(null)}
-                onFocus={() => setHoverIdx(idx)}
-                onBlur={(e) => {
-                  // only clear when focus leaves the card entirely
-                  if (!e.currentTarget.contains(e.relatedTarget)) setHoverIdx(null);
-                }}
-                // CLICK OPENS MODAL
-                onClick={() => setViewer(f)}
+                key={p.title}
+                className="projectCard"
+                variants={card}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                onClick={() => setViewer(p)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    setViewer(f);
+                    setViewer(p);
                   }
                 }}
-                aria-expanded={isOpen}
                 tabIndex={0}
-                style={{ cursor: "pointer" }}
+                aria-label={`${p.title} — open ${count} screenshots`}
               >
-                {/* Folder shape */}
-                <div className="folderShape" aria-hidden>
-                  <div className="folderTab" />
-                  <div className="folderPocket" />
+                <div className="projectMedia">
+                  {cover && (
+                    <img
+                      src={cover}
+                      alt={`${p.title} preview`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  <span className="projectShine" aria-hidden="true" />
+                  <span className="projectCount" aria-hidden="true">
+                    {count} {count === 1 ? "shot" : "shots"}
+                  </span>
                 </div>
 
-                {/* Floating burst */}
-                <motion.div className="burstWrap" variants={burstContainer} aria-hidden>
-                  {previews.map((src, i) => (
-                    <motion.div
-                      key={src + i}
-                      className="burstCard"
-                      variants={cardUp(i)}
-                      style={{ left: `${28 + i * 72}px`, zIndex: 5 + i }}
-                    >
-                      <img src={src} alt="" loading="lazy" decoding="async" />
-                    </motion.div>
-                  ))}
-                  {extra > 0 && (
-                    <motion.div
-                      className="burstCard moreBadge"
-                      variants={cardUp(previews.length)}
-                      style={{ left: `${28 + previews.length * 72}px`, zIndex: 50 }}
-                    >
-                      +{extra}
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                {/* Meta */}
-                <div className="folderMeta">
-                  <div className="folderTitle">{f.title}</div>
-                  <div className="folderChips">
-                    {f.chips?.map((c) => (
-                      <span key={c} className="chip">{c}</span>
-                    ))}
+                <div className="projectBody">
+                  <div className="projectInfo">
+                    <h3 className="projectTitle">{p.title}</h3>
+                    <div className="projectChips">
+                      {p.chips?.slice(0, 3).map((c) => (
+                        <span key={c} className="chip">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-
-                  {/* Keep external link if you like; modal opens on whole card anyway */}
-                  {f.href && (
-                    <a className="viewAll" href={f.href} target="_blank" rel="noreferrer">
-                      Open Repo ↗
+                  {p.href && (
+                    <a
+                      className="projectRepo"
+                      href={p.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      aria-label={`${p.title} repository on GitHub`}
+                    >
+                      Repo ↗
                     </a>
                   )}
                 </div>
-              </motion.article>
+              </m.article>
             );
           })}
-        </div>
+        </m.div>
       </div>
 
-      {/* Modal viewer (portal) */}
       {viewer && (
-        <ImageModal
-          project={{
-            title: viewer.title,
-            desc: viewer.desc || viewer.subtitle || "",
-            images: viewer.images || [],
-          }}
-          onClose={() => setViewer(null)}
-        />
+        <Suspense fallback={null}>
+          <ImageModal
+            project={{
+              title: viewer.title,
+              desc: viewer.desc || viewer.subtitle || "",
+              images: viewer.images || [],
+            }}
+            onClose={() => setViewer(null)}
+          />
+        </Suspense>
       )}
     </section>
   );

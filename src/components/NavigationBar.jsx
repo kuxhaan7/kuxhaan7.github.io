@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Github, Linkedin, FileDown, Sun, Moon, Menu, X } from "lucide-react";
+import { m, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { Github, Linkedin, FileDown, Menu, X } from "lucide-react";
 import Magnetic from "../effects/Magnetic";
 
 const NAV_LINKS = [
@@ -49,14 +49,8 @@ export default function NavigationBar() {
     return () => obs.disconnect();
   }, []);
 
-  // Optional theme toggle (light only by default)
-  const [dark, setDark] = useState(false);
-  useEffect(() => {
-    document.documentElement.dataset.theme = dark ? "dark" : "light";
-  }, [dark]);
-
   return (
-    <motion.nav
+    <m.nav
       className={`nav ${hidden ? "nav-hide" : ""}`}
       aria-label="Primary"
       initial={{ y: -24, opacity: 0 }}
@@ -66,7 +60,7 @@ export default function NavigationBar() {
       <a href="#main" className="skip-link">Skip to content</a>
 
       {/* progress line */}
-      <motion.div className="nav-progress" style={{ scaleX: width }} />
+      <m.div className="nav-progress" style={{ scaleX: width }} />
 
       <div className="container inner">
         {/* Brand + availability */}
@@ -141,7 +135,7 @@ export default function NavigationBar() {
       {/* Mobile panel */}
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             id="mobile-panel"
             className="mobile-panel"
             initial={{ opacity: 0, y: -12 }}
@@ -164,9 +158,9 @@ export default function NavigationBar() {
             <a href="https://www.linkedin.com/in/kushaankaushik/" target="_blank" rel="noreferrer">
               <Linkedin size={16} /> LinkedIn
             </a>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </m.nav>
   );
 }

@@ -1924,3 +1924,159 @@ html {
   .ring{ animation: none !important; }
   .status-dot{ animation: none !important; }
 }
+
+/* ===== Hero line-mask reveal ===== */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em; /* avoid clipping descenders during the mask reveal */
+}
+.hero-line-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ===== Projects — image-forward cards (replaces faint folder tiles) ===== */
+.projects-section {
+  padding: 24px clamp(12px, 5vw, 40px) 96px;
+  background: var(--bg);
+}
+.section-sub {
+  text-align: center;
+  color: var(--muted);
+  margin: 0 auto 40px;
+  max-width: 52ch;
+  font-size: clamp(15px, 2.2vw, 18px);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr; /* every row equal height → perfectly regular cards */
+  gap: clamp(18px, 2.4vw, 28px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.projectCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* fill the equal-height grid row */
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+.projectCard:hover {
+  border-color: #d8dbe6;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.13);
+}
+
+/* Cover image — every card always shows real content, so the grid reads evenly */
+.projectMedia {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f2f4f9, #e9ecf4);
+}
+.projectMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.projectCard:hover .projectMedia img {
+  transform: scale(1.06);
+}
+
+/* diagonal light sweep on hover */
+.projectShine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.75s ease;
+  pointer-events: none;
+}
+.projectCard:hover .projectShine {
+  transform: translateX(130%);
+}
+
+/* screenshot count badge */
+.projectCount {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+}
+
+.projectBody {
+  flex: 1; /* absorb the extra height so the media stays a fixed ratio */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+}
+.projectInfo { min-width: 0; }
+.projectTitle {
+  margin: 0 0 8px;
+  font-size: clamp(16px, 1.6vw, 19px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #111;
+}
+.projectChips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.projectRepo {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  font-weight: 700;
+  font-size: 13px;
+  color: #111;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #f6f7fb;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.12s ease;
+}
+.projectRepo:hover {
+  background: #111;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projectMedia img,
+  .projectShine { transition: none !important; }
+}

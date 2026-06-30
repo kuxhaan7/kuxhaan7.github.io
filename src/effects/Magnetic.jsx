@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m, useMotionValue, useSpring } from "framer-motion";
 
 /** Wrap any element to give it a subtle magnetic pull toward the cursor */
 export default function Magnetic({ children, strength = 24, className }) {
@@ -18,7 +18,7 @@ export default function Magnetic({ children, strength = 24, className }) {
   function onLeave() { x.set(0); y.set(0); }
 
   return (
-    <motion.span
+    <m.span
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -26,6 +26,6 @@ export default function Magnetic({ children, strength = 24, className }) {
       className={className || "magnet"}
     >
       {children}
-    </motion.span>
+    </m.span>
   );
 }

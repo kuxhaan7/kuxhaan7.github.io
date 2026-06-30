@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const features = [
   {
@@ -37,12 +37,12 @@ const container = {
 // invisible even if the entrance animation doesn't run. We animate a subtle
 // slide + scale only, so a failed/paused animation still shows full content.
 const cardVariant = {
-  hidden: { opacity: 1, y: 28, scale: 0.985 },
+  hidden: { opacity: 1, y: 36, scale: 0.98 },
   show: {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 110, damping: 18 },
+    transition: { type: "spring", stiffness: 120, damping: 20, mass: 0.7 },
   },
 };
 
@@ -57,14 +57,15 @@ export default function FeaturedShowcase() {
 
         {/* Mount-based staggered entrance — guaranteed to reveal (no dependency
             on a scroll trigger that could leave cards invisible). */}
-        <motion.div
+        <m.div
           className="showcase-grid"
           variants={container}
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
         >
           {features.map((p) => (
-            <motion.article
+            <m.article
               className="showcase-card"
               key={p.title}
               variants={cardVariant}
@@ -95,9 +96,9 @@ export default function FeaturedShowcase() {
                   <span className="showcase-cta">View Project ↗</span>
                 </div>
               </a>
-            </motion.article>
+            </m.article>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

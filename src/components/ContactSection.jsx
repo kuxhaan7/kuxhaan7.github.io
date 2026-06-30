@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const EMAIL = "kushaankaushik007@gmail.com"; // ← put your real email here
 const GITHUB = "https://github.com/kuxhaan7"; // confirmed
@@ -37,7 +37,7 @@ export default function ContactSection() {
       </div>
 
       <div className="container contact-wrap">
-        <motion.h2
+        <m.h2
           className="contact-title"
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -46,9 +46,9 @@ export default function ContactSection() {
         >
           Let’s build something great.
           <span className="accent-underline" />
-        </motion.h2>
+        </m.h2>
 
-        <motion.p
+        <m.p
           className="contact-sub"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,9 +56,9 @@ export default function ContactSection() {
           transition={{ duration: 0.45 }}
         >
           I’m open to full-stack, systems, iOS/QA, and AI Projects. Based in <strong>New York City</strong>.
-        </motion.p>
+        </m.p>
 
-        <motion.div
+        <m.div
           className="contact-card"
           initial={{ opacity: 0, y: 16, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -101,7 +101,7 @@ export default function ContactSection() {
             {/* <a className="chip-link" href={CAL} target="_blank" rel="noreferrer">Book a call ↗</a> */}
             <a className="chip-link" href={RESUME_URL}>Resume ↗</a>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
