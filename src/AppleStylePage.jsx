@@ -8,6 +8,7 @@ import BackgroundFX from "./effects/BackgroundFX";
 import FeaturedShowcase from "./components/FeaturedShowcase";
 
 import FoldersGrid from "./components/FoldersGrid";
+import CodeProjects from "./components/CodeProjects";
 
 export default function AppleStylePage() {
   return (
@@ -22,6 +23,7 @@ export default function AppleStylePage() {
       <section id="work">
         <FeaturedShowcase />
         <FoldersGrid />
+        <CodeProjects />
       </section>
 
       {/* AboutSection and ContactSection own their own #about / #contact ids */}
