@@ -2106,62 +2106,64 @@ html {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 22px 22px 20px;
   border-radius: 22px;
-  background:
-    linear-gradient(180deg, #fbfcff, #f4f6fb);
+  background: #fff;
   border: 1px solid var(--border);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   color: inherit;
   text-decoration: none;
   overflow: hidden;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
   will-change: transform;
-}
-.codeCard::before {
-  /* faint top accent line that lights up on hover */
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 3px;
-  background: linear-gradient(90deg, #0071e3, #7ab8ff);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .codeCard:hover {
   border-color: #cfd6e6;
-  background: #fff;
   box-shadow: 0 26px 64px rgba(0, 0, 0, 0.12);
 }
-.codeCard:hover::before { transform: scaleX(1); }
 
-.codeTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
+.codeMedia {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #12152b;
 }
-.codeIcon {
+.codeMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
+}
+.codeCard:hover .codeMedia img { transform: scale(1.05); }
+
+.codeArrow {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  background: #fff;
-  border: 1px solid var(--border);
-  color: #0071e3;
-  box-shadow: inset 0 1px 0 #fff, 0 6px 16px rgba(0, 113, 227, 0.1);
-}
-.codeArrow {
-  color: #a0a6b4;
-  transition: transform 0.2s ease, color 0.2s ease;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 .codeCard:hover .codeArrow {
-  color: #0071e3;
+  background: rgba(255, 255, 255, 0.28);
   transform: translate(2px, -2px);
 }
 
+.codeBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 20px 20px;
+}
 .codeTitle {
   margin: 0 0 8px;
   font-size: clamp(16px, 1.7vw, 19px);
@@ -2184,5 +2186,5 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .codeCard, .codeCard::before, .codeArrow { transition: none !important; }
+  .codeCard, .codeMedia img, .codeArrow { transition: none !important; }
 }
