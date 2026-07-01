@@ -3,6 +3,15 @@ import { m } from "framer-motion";
 
 const features = [
   {
+    title: "RouteRx + DelRX",
+    subtitle:
+      "A live delivery system: RouteRx optimizes dispatch routes on a map; DelRX is the driver app that captures signed proof-of-delivery.",
+    link: "https://rowdyroad7.github.io/",
+    img: "/img/routerx.webp",
+    cta: "View Live App ↗",
+    wide: true,
+  },
+  {
     title: "Logiastro",
     subtitle: "Logistics news with geo filters — Next.js + PostgreSQL",
     link: "https://github.com/kuxhaan7/Logiastro",
@@ -66,7 +75,7 @@ export default function FeaturedShowcase() {
         >
           {features.map((p) => (
             <m.article
-              className="showcase-card"
+              className={`showcase-card${p.wide ? " showcase-card--wide" : ""}`}
               key={p.title}
               variants={cardVariant}
               whileHover={{ y: -6 }}
@@ -77,12 +86,12 @@ export default function FeaturedShowcase() {
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`${p.title} — view on GitHub`}
+                aria-label={`${p.title} — ${p.cta ? "open live app" : "view on GitHub"}`}
               >
                 <div className="showcase-media">
                   <img
                     src={p.img}
-                    alt={`${p.title} project screenshot`}
+                    alt={`${p.title} preview`}
                     loading="lazy"
                     decoding="async"
                   />
@@ -90,10 +99,11 @@ export default function FeaturedShowcase() {
                 </div>
                 <div className="showcase-body">
                   <div className="showcase-text">
-                    <h3 className="showcase-title">{p.title}</h3>
+                    {/* wide hero already shows its title in the thumbnail */}
+                    {!p.wide && <h3 className="showcase-title">{p.title}</h3>}
                     <p className="showcase-desc">{p.subtitle}</p>
                   </div>
-                  <span className="showcase-cta">View Project ↗</span>
+                  <span className="showcase-cta">{p.cta || "View Project ↗"}</span>
                 </div>
               </a>
             </m.article>
