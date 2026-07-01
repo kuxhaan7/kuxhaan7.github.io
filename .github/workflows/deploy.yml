@@ -12,7 +12,9 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  # Never cancel an in-progress Pages deploy — cancelling one mid-flight
+  # orphans its deployment and leaves the next run stuck in deployment_queued.
+  cancel-in-progress: false
 
 jobs:
   build:
