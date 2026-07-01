@@ -5,7 +5,7 @@ const features = [
   {
     title: "RouteRx + DelRX",
     subtitle:
-      "A live delivery system: RouteRx optimizes dispatch routes on a map; DelRX is the driver app that captures signed proof-of-delivery.",
+      "A live delivery system. RouteRx (React · Vite · Firebase) optimizes dispatch routes on a map; DelRX captures signed proof-of-delivery with signature_pad on Firestore.",
     link: "https://rowdyroad7.github.io/",
     img: "/img/routerx.webp",
     cta: "View Live App ↗",
