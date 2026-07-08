@@ -21,7 +21,7 @@ export default function AboutSection() {
 
             <div className="about-badges">
               <span className="badge">New York City, USA</span>
-              <span className="badge">5+ years experience</span>
+              <span className="badge">3+ years experience</span>
               <span className="badge badge-live">
                 <span className="dot" /> Open to work
               </span>
@@ -29,7 +29,7 @@ export default function AboutSection() {
           </header>
 
           <p className="about-body">
-            Software Engineer with 5+ years building production systems across
+            Software Engineer with 3+ years building production systems across
             logistics, IoT, and AI — from Next.js platforms and typed REST APIs
             to BLE telemetry pipelines and LLM agents. I&apos;m currently at
             <strong> Marhaba Group (M1 Shipping)</strong>, integrating the Copart
