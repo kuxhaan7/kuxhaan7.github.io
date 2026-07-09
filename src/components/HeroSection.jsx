@@ -1,5 +1,6 @@
 // src/components/HeroSection.jsx
-import { m } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
+import Magnetic from "../effects/Magnetic";
 
 // Premium staggered entrance — each line rises out from behind a mask.
 const container = {
@@ -19,6 +20,11 @@ const fade = {
 };
 
 export default function HeroSection() {
+  // Scroll-linked parallax: the hero content drifts up and fades as it leaves.
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 600], [0, -90]);
+  const opacity = useTransform(scrollY, [0, 460], [1, 0]);
+
   const scrollToProjects = () => {
     const target =
       document.querySelector("#projects") ||
@@ -29,7 +35,12 @@ export default function HeroSection() {
 
   return (
     <section className="hero-wrap">
-      <m.div variants={container} initial="hidden" animate="show">
+      <m.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        style={{ y, opacity }}
+      >
         {/* Big headline — line-masked reveal */}
         <h1 className="hero-title">
           {["I craft tools", "that hustle as hard", "as you do"].map((t) => (
@@ -48,14 +59,18 @@ export default function HeroSection() {
           and every interaction inspires action
         </m.p>
 
-        {/* CTA */}
+        {/* CTA — magnetic pull toward the cursor for a tactile feel */}
         <m.div className="hero-cta" variants={fade}>
-          <button className="cta-primary" onClick={scrollToProjects}>
-            View Projects
-          </button>
-          <a className="cta-secondary" href="#contact">
-            Contact
-          </a>
+          <Magnetic strength={26} className="mag-cta">
+            <button className="cta-primary" onClick={scrollToProjects}>
+              View Projects
+            </button>
+          </Magnetic>
+          <Magnetic strength={22} className="mag-cta">
+            <a className="cta-secondary" href="#contact">
+              Contact
+            </a>
+          </Magnetic>
         </m.div>
       </m.div>
     </section>

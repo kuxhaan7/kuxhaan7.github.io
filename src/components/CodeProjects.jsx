@@ -2,6 +2,7 @@
 import React from "react";
 import { m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import Reveal, { MaskReveal } from "../effects/Reveal";
 import { codeProjects } from "../data/codeProjects";
 
 const grid = {
@@ -25,10 +26,12 @@ export default function CodeProjects() {
   return (
     <section className="code-section" id="code" aria-label="Code and AI projects">
       <div className="container">
-        <h2 className="section-title">Code &amp; AI</h2>
-        <p className="section-sub">
+        <h2 className="section-title">
+          <MaskReveal>Code &amp; AI</MaskReveal>
+        </h2>
+        <Reveal as="p" className="section-sub" delay={0.1}>
           Agents, ML pipelines, and automation — the engineering behind the screens.
-        </p>
+        </Reveal>
 
         <m.div
           className="code-grid"

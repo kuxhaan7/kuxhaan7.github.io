@@ -1,6 +1,7 @@
 // src/components/FoldersGrid.jsx
 import React, { Suspense, lazy, useState } from "react";
 import { m } from "framer-motion";
+import Reveal, { MaskReveal } from "../effects/Reveal";
 import { projects } from "../data/projects";
 
 // The modal is only needed once a card is opened — split it out of the
@@ -31,10 +32,12 @@ export default function FoldersGrid() {
   return (
     <section className="projects-section" id="gallery">
       <div className="container">
-        <h2 className="section-title">Projects</h2>
-        <p className="section-sub">
+        <h2 className="section-title">
+          <MaskReveal>Projects</MaskReveal>
+        </h2>
+        <Reveal as="p" className="section-sub" delay={0.1}>
           Tap any project to flip through the full set of screenshots.
-        </p>
+        </Reveal>
 
         <m.div
           className="projects-grid"
