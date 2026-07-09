@@ -1,5 +1,4 @@
 import React from "react";
-import Reveal from "../effects/Reveal";
 
 export default function AboutSection() {
   const skills = [
@@ -12,7 +11,7 @@ export default function AboutSection() {
     <section id="about" className="about">
       <div className="container about-grid">
         {/* LEFT COLUMN — main bio card */}
-        <Reveal as="article" className="about-card about-main">
+        <article className="about-card about-main">
           <header className="about-head">
             <h2 className="eyebrow">About</h2>
             <h3 className="about-title">Kushaan Kaushik</h3>
@@ -56,12 +55,12 @@ export default function AboutSection() {
             </a>
             <a className="btn" href="./resume/KKRESUME2026.pdf" target="_blank" rel="noreferrer">Résumé ↗</a>
           </div>
-        </Reveal>
+        </article>
 
         {/* RIGHT COLUMN — two balanced tiles */}
         <aside className="about-tiles">
           {/* Full-Stack Engineering */}
-          <Reveal as="article" className="about-card tile" delay={0.08}>
+          <article className="about-card tile">
             <h3 className="tile-title">Full-Stack Engineering</h3>
             <ul className="tile-list">
               <li><span className="li-ico" /> React/Next.js apps with clean component systems</li>
@@ -75,10 +74,10 @@ export default function AboutSection() {
                 <span className="chip" key={t}>{t}</span>
               ))}
             </div>
-          </Reveal>
+          </article>
 
           {/* AI & Machine Learning */}
-          <Reveal as="article" className="about-card tile" delay={0.16}>
+          <article className="about-card tile">
             <h3 className="tile-title">AI &amp; Machine Learning</h3>
             <ul className="tile-list">
               <li><span className="li-ico" /> Autonomous LLM agents with tool use (Claude API)</li>
@@ -92,7 +91,7 @@ export default function AboutSection() {
                 <span className="chip" key={t}>{t}</span>
               ))}
             </div>
-          </Reveal>
+          </article>
         </aside>
       </div>
     </section>

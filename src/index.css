@@ -1952,23 +1952,6 @@ html {
   will-change: transform;
 }
 
-/* ===== Shared heading mask reveal (MaskReveal) ===== */
-.reveal-mask {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  padding-bottom: 0.08em; /* keep descenders from clipping mid-reveal */
-}
-.reveal-mask-inner {
-  display: inline-block;
-  white-space: nowrap; /* stay one line so the clip mask never truncates */
-  will-change: transform;
-}
-
-/* Magnetic CTA wrappers keep the buttons aligned in the hero row */
-.hero-cta { align-items: center; }
-.mag-cta { display: inline-flex; align-items: center; }
-
 /* ===== Projects — image-forward cards (replaces faint folder tiles) ===== */
 .projects-section {
   padding: 24px clamp(12px, 5vw, 40px) 96px;

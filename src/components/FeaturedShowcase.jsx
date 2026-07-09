@@ -1,6 +1,5 @@
 import React from "react";
 import { m } from "framer-motion";
-import Reveal, { MaskReveal } from "../effects/Reveal";
 
 const features = [
   {
@@ -60,12 +59,10 @@ export default function FeaturedShowcase() {
   return (
     <section className="showcase" id="projects">
       <div className="container">
-        <h2 className="showcase-heading">
-          <MaskReveal>Featured Work</MaskReveal>
-        </h2>
-        <Reveal as="p" className="showcase-sub" delay={0.1}>
+        <h2 className="showcase-heading">Featured Work</h2>
+        <p className="showcase-sub">
           A selection of products I&apos;ve designed, built, and shipped.
-        </Reveal>
+        </p>
 
         {/* Mount-based staggered entrance — guaranteed to reveal (no dependency
             on a scroll trigger that could leave cards invisible). */}
