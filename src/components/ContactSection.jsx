@@ -55,7 +55,7 @@ export default function ContactSection() {
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.45 }}
         >
-          I’m open to full-stack, systems, iOS/QA, and AI Projects. Based in <strong>New York City</strong>.
+          I’m open to full-stack, systems, iOS/QA, and AI Projects. <strong>Open to relocation</strong>.
         </m.p>
 
         <m.div
