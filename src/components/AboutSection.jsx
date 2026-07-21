@@ -15,7 +15,7 @@ export default function AboutSection() {
           <header className="about-head">
             <h2 className="eyebrow">About</h2>
             <h3 className="about-title">Kushaan Kaushik</h3>
-            <p className="about-sub">Forward Deployed Engineer · Full-Stack &amp; Applied AI</p>
+            <p className="about-sub">Forward Deployed Engineer / Software Engineer</p>
 
             <div className="about-edu">M.S. Computer Science, Montclair State University (2024–2026)</div>
 
@@ -29,7 +29,7 @@ export default function AboutSection() {
           </header>
 
           <p className="about-body">
-            Forward Deployed Engineer with 4+ years building production systems
+            Software Engineer with 4+ years building production systems
             across logistics, IoT, and AI. As a Forward Deployed Engineer at
             <strong> Marhaba Group (M1 Shipping)</strong>, I integrated the Copart
             API and tuned Supabase/Vercel deployments that cut median API latency
