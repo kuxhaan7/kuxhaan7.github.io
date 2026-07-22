@@ -4,14 +4,6 @@
 // screenshot-able products.
 export const codeProjects = [
   {
-    title: "Shelby — Autonomous AI Agent",
-    icon: "bot",
-    thumb: "/img/code/shelby.webp",
-    desc: "A persistent personal AI agent with tool use, web search, and recurring heartbeats for autonomy. Talks over Telegram/WhatsApp and acts on live production systems.",
-    tags: ["Claude Opus API", "Tavily", "ElevenLabs", "FastAPI"],
-    href: "https://github.com/kuxhaan7/Shelby-AI",
-  },
-  {
     title: "Network Outage Reporting (NOR)",
     icon: "activity",
     thumb: "/img/code/nor.webp",

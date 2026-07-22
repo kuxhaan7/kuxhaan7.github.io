@@ -12,6 +12,14 @@ const features = [
     wide: true,
   },
   {
+    title: "Shelby — Autonomous AI Agent",
+    subtitle:
+      "Persistent AI agent with Claude API tool use, ChromaDB RAG memory, and LangChain evals. Communicates over Telegram · FastAPI backend on Railway.",
+    link: "https://shelby-ai-production.up.railway.app/",
+    img: "/img/shelby.webp",
+    cta: "View Live App ↗",
+  },
+  {
     title: "Logiastro",
     subtitle: "Logistics news with geo filters — Next.js + PostgreSQL",
     link: "https://github.com/kuxhaan7/Logiastro",
