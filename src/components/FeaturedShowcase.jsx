@@ -10,7 +10,7 @@ const features = [
     link: "https://shelby-ai-production.up.railway.app/",
     img: "/img/shelby.webp",
     cta: "View Live App ↗",
-    hero: true,
+    wide: true,
   },
   {
     title: "RouteRx + DelRX",
