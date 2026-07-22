@@ -1,102 +1,128 @@
-// Generates the featured showcase thumbnail for Shelby — autonomous AI agent.
-// AI/terminal motif on a dark violet-to-indigo gradient.
-// Output: public/img/shelby.webp (4:3 to match regular showcase cards)
+// Generates the hero banner for Shelby — catchy poster style, full canvas.
+// Output: public/img/shelby.webp  (1600×900, 16:9)
 import sharp from "sharp";
 
-const W = 800;
-const H = 600;
-const A = "#0d0a1f"; // deep indigo-black
-const B = "#130a2e"; // deep violet
-const AC = "#a78bfa"; // violet accent
-const AC2 = "#f0abfc"; // fuchsia accent
+const W = 1600;
+const H = 900;
 
-const svg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+const BG1 = "#08061a";
+const BG2 = "#0f0826";
+const AC  = "#8b5cf6";
+const AC2 = "#ec4899";
+const AC3 = "#06b6d4";
+
+function chip(x, y, w, text, color) {
+  return `
+  <g transform="translate(${x},${y})">
+    <rect width="${w}" height="34" rx="17" fill="${color}" fill-opacity="0.15" stroke="${color}" stroke-opacity="0.45" stroke-width="1.5"/>
+    <text x="${w/2}" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="${color}">${text}</text>
+  </g>`;
+}
+
+function node(cx, cy, r, label1, label2, color) {
+  const secondLine = label2
+    ? `<text text-anchor="middle" dy="10" font-family="monospace" font-size="11" font-weight="700" fill="${color}">${label2}</text>`
+    : "";
+  const dy1 = label2 ? "-4" : "5";
+  return `
+  <g transform="translate(${cx},${cy})">
+    <circle r="${r}" fill="${color}" fill-opacity="0.16" stroke="${color}" stroke-width="1.5" stroke-opacity="0.7"/>
+    <text text-anchor="middle" dy="${dy1}" font-family="monospace" font-size="11" font-weight="700" fill="${color}">${label1}</text>
+    ${secondLine}
+  </g>`;
+}
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="${A}"/>
-      <stop offset="1" stop-color="${B}"/>
+      <stop offset="0"   stop-color="${BG1}"/>
+      <stop offset="0.5" stop-color="${BG2}"/>
+      <stop offset="1"   stop-color="#100420"/>
     </linearGradient>
-    <radialGradient id="glow" cx="72%" cy="22%" r="60%">
-      <stop offset="0" stop-color="${AC}" stop-opacity="0.45"/>
-      <stop offset="0.5" stop-color="${AC}" stop-opacity="0.08"/>
-      <stop offset="1" stop-color="${AC}" stop-opacity="0"/>
+    <radialGradient id="gA" cx="28%" cy="38%" r="55%">
+      <stop offset="0" stop-color="${AC}"  stop-opacity="0.32"/>
+      <stop offset="1" stop-color="${AC}"  stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glow2" cx="20%" cy="80%" r="45%">
-      <stop offset="0" stop-color="${AC2}" stop-opacity="0.25"/>
+    <radialGradient id="gB" cx="78%" cy="52%" r="48%">
+      <stop offset="0" stop-color="${AC2}" stop-opacity="0.20"/>
       <stop offset="1" stop-color="${AC2}" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
-      <circle cx="1.5" cy="1.5" r="1.5" fill="#ffffff" fill-opacity="0.04"/>
+    <radialGradient id="gC" cx="70%" cy="18%" r="36%">
+      <stop offset="0" stop-color="${AC3}" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="${AC3}" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#fff" fill-opacity="0.04"/>
     </pattern>
   </defs>
 
   <rect width="${W}" height="${H}" fill="url(#bg)"/>
   <rect width="${W}" height="${H}" fill="url(#dots)"/>
-  <rect width="${W}" height="${H}" fill="url(#glow)"/>
-  <rect width="${W}" height="${H}" fill="url(#glow2)"/>
+  <rect width="${W}" height="${H}" fill="url(#gA)"/>
+  <rect width="${W}" height="${H}" fill="url(#gB)"/>
+  <rect width="${W}" height="${H}" fill="url(#gC)"/>
 
-  <!-- terminal window (right side) -->
-  <g transform="translate(390, 120)">
-    <rect width="370" height="320" rx="12" fill="#1a1033" fill-opacity="0.85" stroke="${AC}" stroke-opacity="0.25" stroke-width="1.5"/>
-    <!-- titlebar -->
-    <rect width="370" height="36" rx="12" fill="#221842"/>
-    <rect y="24" width="370" height="12" fill="#221842"/>
-    <circle cx="18" cy="18" r="6" fill="#ff5f57"/>
-    <circle cx="38" cy="18" r="6" fill="#ffbd2e"/>
-    <circle cx="58" cy="18" r="6" fill="#28c840"/>
-    <text x="185" y="23" text-anchor="middle" font-family="monospace" font-size="11" fill="#ffffff" fill-opacity="0.4">shelby — production</text>
-    <!-- terminal lines -->
-    <text x="20" y="68" font-family="monospace" font-size="12" fill="${AC}" fill-opacity="0.9">&gt; shelby.run()</text>
-    <text x="20" y="92" font-family="monospace" font-size="12" fill="#ffffff" fill-opacity="0.55">↳ Heartbeat loop active [12:04 UTC]</text>
-    <text x="20" y="118" font-family="monospace" font-size="12" fill="#ffffff" fill-opacity="0.55">↳ Memory: ChromaDB — 847 vectors</text>
-    <text x="20" y="144" font-family="monospace" font-size="12" fill="#ffffff" fill-opacity="0.55">↳ Tool use: web_search, time, rag</text>
-    <text x="20" y="172" font-family="monospace" font-size="12" fill="${AC2}" fill-opacity="0.85">&gt; "Remind me tomorrow at 9am"</text>
-    <text x="20" y="198" font-family="monospace" font-size="11" fill="#ffffff" fill-opacity="0.4">  Scheduled via Telegram · ✓ confirmed</text>
-    <text x="20" y="226" font-family="monospace" font-size="12" fill="${AC}" fill-opacity="0.9">&gt; eval.run(faithfulness=0.94)</text>
-    <text x="20" y="252" font-family="monospace" font-size="11" fill="#ffffff" fill-opacity="0.4">  LangChain evals · relevance: 0.91</text>
-    <!-- blinking cursor -->
-    <rect x="20" y="272" width="8" height="14" fill="${AC}" fill-opacity="0.8" rx="1"/>
+  <!-- ── Agent diagram (right side, cx=1190, cy=460) ─────────────── -->
+
+  <!-- orbit ring -->
+  <circle cx="1190" cy="460" r="172" fill="none" stroke="${AC}" stroke-width="1" stroke-opacity="0.14" stroke-dasharray="4 12"/>
+
+  <!-- spoke lines to satellites -->
+  <line x1="1190" y1="420" x2="1190" y2="292" stroke="${AC}"  stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="3 7"/>
+  <line x1="1332" y1="460" x2="1230" y2="460" stroke="${AC2}" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="3 7"/>
+  <line x1="1300" y1="590" x2="1232" y2="508" stroke="${AC3}" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="3 7"/>
+  <line x1="1080" y1="590" x2="1148" y2="508" stroke="${AC2}" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="3 7"/>
+  <line x1="1316" y1="322" x2="1228" y2="396" stroke="${AC3}" stroke-width="1.5" stroke-opacity="0.30" stroke-dasharray="3 7"/>
+  <line x1="1064" y1="322" x2="1152" y2="396" stroke="${AC}"  stroke-width="1.5" stroke-opacity="0.30" stroke-dasharray="3 7"/>
+
+  <!-- central hub -->
+  <circle cx="1190" cy="460" r="72"  fill="${AC}" fill-opacity="0.12" stroke="${AC}" stroke-width="2" stroke-opacity="0.55"/>
+  <circle cx="1190" cy="460" r="48"  fill="${AC}" fill-opacity="0.20"/>
+  <text x="1190" y="466" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="17" font-weight="800" fill="#fff">AGENT</text>
+
+  <!-- satellite nodes -->
+  ${node(1190, 278, 38, "Claude", "API",   AC)}
+  ${node(1370, 460, 38, "Fast",  "API",    AC2)}
+  ${node(1318, 604, 36, "Chroma","DB",     AC3)}
+  ${node(1062, 604, 36, "Tele",  "gram",   AC2)}
+  ${node(1330, 314, 32, "Tavily","",       AC3)}
+  ${node(1050, 314, 32, "RAG",   "",       AC)}
+
+  <!-- ── Left text block ─────────────────────────────────────────── -->
+  <g font-family="-apple-system, Segoe UI, Helvetica Neue, sans-serif">
+    <!-- LIVE badge -->
+    <circle cx="68" cy="170" r="7" fill="#22c55e"/>
+    <text x="84" y="176" font-size="14" letter-spacing="3" font-weight="700" fill="#86efac">LIVE PROJECT</text>
+
+    <!-- Main title -->
+    <text x="60" y="335" font-size="148" font-weight="800" fill="#ffffff" letter-spacing="-5">Shelby</text>
+
+    <!-- Tagline -->
+    <text x="64" y="392" font-size="21" letter-spacing="3.5" font-weight="600" fill="#ffffff" fill-opacity="0.42">AUTONOMOUS AI AGENT</text>
+
+    <!-- Divider -->
+    <line x1="64" y1="428" x2="528" y2="428" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+
+    <!-- Description -->
+    <text x="64" y="472" font-size="18" fill="#ffffff" fill-opacity="0.58">Persistent agent with tool use, RAG memory,</text>
+    <text x="64" y="500" font-size="18" fill="#ffffff" fill-opacity="0.58">LangChain evals. Live on Railway.</text>
+
+    <!-- chip row 1 -->
+    ${chip( 64, 542, 144, "Claude Opus API", AC)}
+    ${chip(220, 542, 104, "FastAPI",          AC2)}
+    ${chip(336, 542, 122, "ChromaDB",         AC3)}
+    ${chip(470, 542,  82, "RAG",              AC)}
+
+    <!-- chip row 2 -->
+    ${chip( 64, 592, 120, "LangChain",  AC2)}
+    ${chip(196, 592, 106, "Telegram",   AC3)}
+    ${chip(314, 592,  90, "Tavily",     AC)}
+    ${chip(416, 592, 126, "ElevenLabs", AC2)}
   </g>
 
-  <!-- text (left) -->
-  <g font-family="-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
-    <!-- live badge -->
-    <circle cx="46" cy="128" r="6" fill="#34d399"/>
-    <text x="62" y="134" font-size="14" letter-spacing="3" font-weight="700" fill="#86efac">LIVE PROJECT</text>
-    <!-- title -->
-    <text x="40" y="240" font-size="86" font-weight="800" fill="#ffffff" letter-spacing="-3">Shelby</text>
-    <!-- tagline -->
-    <text x="42" y="290" font-size="18" letter-spacing="1.5" font-weight="600" fill="#ffffff" fill-opacity="0.5">AUTONOMOUS AI AGENT</text>
-    <!-- stack chips -->
-    <g transform="translate(40, 330)">
-      <rect width="110" height="28" rx="14" fill="${AC}" fill-opacity="0.18" stroke="${AC}" stroke-opacity="0.4" stroke-width="1"/>
-      <text x="55" y="18.5" text-anchor="middle" font-size="12" font-weight="600" fill="${AC}">Claude API</text>
-    </g>
-    <g transform="translate(162, 330)">
-      <rect width="90" height="28" rx="14" fill="${AC2}" fill-opacity="0.14" stroke="${AC2}" stroke-opacity="0.35" stroke-width="1"/>
-      <text x="45" y="18.5" text-anchor="middle" font-size="12" font-weight="600" fill="${AC2}">FastAPI</text>
-    </g>
-    <g transform="translate(264, 330)">
-      <rect width="100" height="28" rx="14" fill="${AC}" fill-opacity="0.14" stroke="${AC}" stroke-opacity="0.3" stroke-width="1"/>
-      <text x="50" y="18.5" text-anchor="middle" font-size="12" font-weight="600" fill="${AC}" fill-opacity="0.9">ChromaDB</text>
-    </g>
-    <g transform="translate(40, 375)">
-      <rect width="80" height="28" rx="14" fill="${AC2}" fill-opacity="0.14" stroke="${AC2}" stroke-opacity="0.3" stroke-width="1"/>
-      <text x="40" y="18.5" text-anchor="middle" font-size="12" font-weight="600" fill="${AC2}" fill-opacity="0.9">RAG</text>
-    </g>
-    <g transform="translate(132, 375)">
-      <rect width="120" height="28" rx="14" fill="${AC}" fill-opacity="0.12" stroke="${AC}" stroke-opacity="0.25" stroke-width="1"/>
-      <text x="60" y="18.5" text-anchor="middle" font-size="12" font-weight="600" fill="${AC}" fill-opacity="0.85">LangChain</text>
-    </g>
-    <g transform="translate(264, 375)">
-      <rect width="96" height="28" rx="14" fill="${AC2}" fill-opacity="0.12" stroke="${AC2}" stroke-opacity="0.22" stroke-width="1"/>
-      <text x="48" y="18.5" text-anchor="middle" font-size="12" font-weight="600" fill="${AC2}" fill-opacity="0.8">Telegram</text>
-    </g>
-  </g>
-
-  <rect x="0" y="0" width="${W}" height="${H}" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1.5"/>
+  <!-- border -->
+  <rect width="${W}" height="${H}" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1.5"/>
 </svg>`;
 
-await sharp(Buffer.from(svg)).webp({ quality: 90 }).toFile("public/img/shelby.webp");
+await sharp(Buffer.from(svg)).webp({ quality: 92 }).toFile("public/img/shelby.webp");
 console.log("✓ public/img/shelby.webp");

@@ -2,44 +2,47 @@ import React from "react";
 import { m } from "framer-motion";
 
 const features = [
+  // ── Live products ─────────────────────────────────────────────────────────
+  {
+    title: "Shelby — Autonomous AI Agent",
+    subtitle:
+      "Persistent AI agent built on Claude API with tool use, ChromaDB RAG memory, and LangChain evals. Talks over Telegram · FastAPI backend deployed on Railway.",
+    link: "https://shelby-ai-production.up.railway.app/",
+    img: "/img/shelby.webp",
+    cta: "View Live App ↗",
+    hero: true,
+  },
   {
     title: "RouteRx + DelRX",
     subtitle:
-      "A live delivery system. RouteRx (React · Vite · Firebase) optimizes dispatch routes on a map; DelRX captures signed proof-of-delivery with signature_pad on Firestore.",
+      "Live delivery system — RouteRx (React · Vite · Firebase) optimizes dispatch routes; DelRX captures signed proof-of-delivery via signature_pad on Firestore.",
     link: "https://rowdyroad7.github.io/",
     img: "/img/routerx.webp",
     cta: "View Live App ↗",
     wide: true,
   },
-  {
-    title: "Shelby — Autonomous AI Agent",
-    subtitle:
-      "Persistent AI agent with Claude API tool use, ChromaDB RAG memory, and LangChain evals. Communicates over Telegram · FastAPI backend on Railway.",
-    link: "https://shelby-ai-production.up.railway.app/",
-    img: "/img/shelby.webp",
-    cta: "View Live App ↗",
-  },
+  // ── Selected projects ──────────────────────────────────────────────────────
   {
     title: "Logiastro",
-    subtitle: "Logistics news with geo filters — Next.js + PostgreSQL",
+    subtitle: "Logistics news hub with geo filters — Next.js + PostgreSQL",
     link: "https://github.com/kuxhaan7/Logiastro",
     img: "/img/logiastro.webp",
   },
   {
     title: "BLE Tracking",
-    subtitle: "Raspberry Pi + MERN telemetry dashboards",
+    subtitle: "Raspberry Pi + MERN IoT telemetry dashboards for 200+ workers",
     link: "https://github.com/kuxhaan7/BLE-tracking-system",
     img: "/img/ble.webp",
   },
   {
     title: "HoliHealth",
-    subtitle: "Ops monitoring with audits & reports — Laravel",
+    subtitle: "Ops monitoring with audits & automated reports — Laravel",
     link: "https://github.com/kuxhaan7/Holihealth",
     img: "/img/holihealth.webp",
   },
   {
     title: "Mega-Auto",
-    subtitle: "Car bidding monorepo — Nuxt, Nest, TS, MongoDB",
+    subtitle: "Car bidding monorepo — Nuxt UI, NestJS, TypeScript, MongoDB",
     link: "https://github.com/kuxhaan7/Mega-Auto",
     img: "/img/megaauto.webp",
   },
@@ -81,41 +84,47 @@ export default function FeaturedShowcase() {
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
         >
-          {features.map((p) => (
-            <m.article
-              className={`showcase-card${p.wide ? " showcase-card--wide" : ""}`}
-              key={p.title}
-              variants={cardVariant}
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 260, damping: 22 }}
-            >
-              <a
-                className="showcase-link"
-                href={p.link}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${p.title} — ${p.cta ? "open live app" : "view on GitHub"}`}
+          {features.map((p) => {
+            const cardClass = `showcase-card${
+              p.hero ? " showcase-card--hero" : p.wide ? " showcase-card--wide" : ""
+            }`;
+            const isFullWidth = p.hero || p.wide;
+            return (
+              <m.article
+                className={cardClass}
+                key={p.title}
+                variants={cardVariant}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 260, damping: 22 }}
               >
-                <div className="showcase-media">
-                  <img
-                    src={p.img}
-                    alt={`${p.title} preview`}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="showcase-shine" aria-hidden="true" />
-                </div>
-                <div className="showcase-body">
-                  <div className="showcase-text">
-                    {/* wide hero already shows its title in the thumbnail */}
-                    {!p.wide && <h3 className="showcase-title">{p.title}</h3>}
-                    <p className="showcase-desc">{p.subtitle}</p>
+                <a
+                  className="showcase-link"
+                  href={p.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${p.title} — ${p.cta ? "open live app" : "view on GitHub"}`}
+                >
+                  <div className="showcase-media">
+                    <img
+                      src={p.img}
+                      alt={`${p.title} preview`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className="showcase-shine" aria-hidden="true" />
                   </div>
-                  <span className="showcase-cta">{p.cta || "View Project ↗"}</span>
-                </div>
-              </a>
-            </m.article>
-          ))}
+                  <div className="showcase-body">
+                    <div className="showcase-text">
+                      {/* hero/wide cards show their title in the thumbnail */}
+                      {!isFullWidth && <h3 className="showcase-title">{p.title}</h3>}
+                      <p className="showcase-desc">{p.subtitle}</p>
+                    </div>
+                    <span className="showcase-cta">{p.cta || "View Project ↗"}</span>
+                  </div>
+                </a>
+              </m.article>
+            );
+          })}
         </m.div>
       </div>
     </section>

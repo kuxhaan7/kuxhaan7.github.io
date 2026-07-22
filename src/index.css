@@ -1518,6 +1518,19 @@ html {
   /* matches the generated 2.4:1 thumbnail exactly, so the title never crops */
   aspect-ratio: 2.4 / 1;
 }
+/* Dominant hero tile — taller 16:9 media, more generous body padding. */
+.showcase-card--hero {
+  grid-column: 1 / -1;
+}
+.showcase-card--hero .showcase-media {
+  aspect-ratio: 16 / 9;
+}
+.showcase-card--hero .showcase-body {
+  padding: 22px 28px;
+}
+.showcase-card--hero .showcase-desc {
+  font-size: 15px;
+}
 .showcase-link {
   display: flex;
   flex-direction: column;
