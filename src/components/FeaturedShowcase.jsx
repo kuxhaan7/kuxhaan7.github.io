@@ -1,6 +1,5 @@
 import React from "react";
 import { m } from "framer-motion";
-import ScrollReveal from "../scroll/ScrollReveal";
 
 const features = [
   // ── Live products ─────────────────────────────────────────────────────────
@@ -71,12 +70,10 @@ export default function FeaturedShowcase() {
   return (
     <section className="showcase" id="projects">
       <div className="container">
-        <ScrollReveal>
-          <h2 className="showcase-heading">Featured Work</h2>
-          <p className="showcase-sub">
-            A selection of products I&apos;ve designed, built, and shipped.
-          </p>
-        </ScrollReveal>
+        <h2 className="showcase-heading">Featured Work</h2>
+        <p className="showcase-sub">
+          A selection of products I&apos;ve designed, built, and shipped.
+        </p>
 
         {/* Mount-based staggered entrance — guaranteed to reveal (no dependency
             on a scroll trigger that could leave cards invisible). */}
