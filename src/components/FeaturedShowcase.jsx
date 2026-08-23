@@ -1,13 +1,14 @@
 import React from "react";
 import { m } from "framer-motion";
+import ScrollReveal from "../scroll/ScrollReveal";
 
 const features = [
   // ── Live products ─────────────────────────────────────────────────────────
   {
     title: "Shelby — Autonomous AI Agent",
     subtitle:
-      "Persistent AI agent built on Claude API with tool use, ChromaDB RAG memory, and LangChain evals. Talks over Telegram · FastAPI backend deployed on Railway.",
-    link: "https://shelby-ai-production.up.railway.app/",
+      "Persistent AI agent built on Claude API with tool use, ChromaDB RAG memory, and LangChain evals. Talks over Telegram · FastAPI backend deployed on Google Cloud Run.",
+    link: "https://shelby-xa3v4wt7na-uc.a.run.app/",
     img: "/img/shelby.webp",
     cta: "View Live App ↗",
     wide: true,
@@ -70,10 +71,12 @@ export default function FeaturedShowcase() {
   return (
     <section className="showcase" id="projects">
       <div className="container">
-        <h2 className="showcase-heading">Featured Work</h2>
-        <p className="showcase-sub">
-          A selection of products I&apos;ve designed, built, and shipped.
-        </p>
+        <ScrollReveal>
+          <h2 className="showcase-heading">Featured Work</h2>
+          <p className="showcase-sub">
+            A selection of products I&apos;ve designed, built, and shipped.
+          </p>
+        </ScrollReveal>
 
         {/* Mount-based staggered entrance — guaranteed to reveal (no dependency
             on a scroll trigger that could leave cards invisible). */}
