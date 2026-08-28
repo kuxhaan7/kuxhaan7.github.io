@@ -7,7 +7,7 @@ const features = [
     title: "Shelby — Autonomous AI Agent",
     subtitle:
       "Persistent AI agent built on Claude API with tool use, ChromaDB RAG memory, and LangChain evals. Talks over Telegram · FastAPI backend deployed on Google Cloud Run.",
-    link: "https://shelby-xa3v4wt7na-uc.a.run.app/",
+    link: "https://shelby-default-970577535372.us-central1.run.app/",
     img: "/img/shelby.webp",
     cta: "View Live App ↗",
     wide: true,
